@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Photo Gallery</title>
+  <style>
+    /* CSS styles */
+    
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin: 20px auto;
+      max-width: 600px;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .thumbnails img {
+      width: 110px;
+      height: 110px;
+      margin: 5px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      border: 2px solid #000;
+      object-fit: cover;
+    }
+
+    .thumbnails img:hover {
+      transform: scale(1.1);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+      text-align: center;
+    }
+
+    .overlay.open {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay-image {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .navigation {
+      position: absolute;
+      top: 50%;
+      left: 10px;
+      right: 10px;
+    }
+
+    .prev,
+    .next {
+      color: #fff;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    .prev {
+      float: left;
+    }
+
+    .next {
+      float: right;
+    }
+
+    .close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      font-size: 30px;
+      cursor: pointer;
+    }
+
+    .comment-section {
+      margin-top: 20px;
+    }
+
+    .comment {
+      margin-bottom: 10px;
+    }
+
+    .user-avatar {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .comment-text {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    .like,
+    .dislike {
+      color: gray;
+      cursor: pointer;
+      transition: color 0.3s ease;
+      position: relative;
+    }
+
+    .like:hover,
+    .dislike:hover {
+      color: blue;
+    }
+
+    .like:hover::before,
+    .dislike:hover::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      top: -25px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 5px;
+      background-color: #000;
+      color: #fff;
+      font-size: 12px;
+      white-space: nowrap;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .like:hover::before {
+      content: attr(data-tooltip-like);
+    }
+
+    .dislike:hover::before {
+      content: attr(data-tooltip-dislike);
+    }
+
+    .caption {
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .updated-time {
+      font-size: 12px;
+      color: gray;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="gallery">
+      <div class="thumbnails">
+        <figure>
+          <img src="images\basantapur.jpg" alt="Image 1" data-index="0">
+          <figcaption>
+            Basantapur ko hai
+            <span class="updated-time">Updated: May 27, 2023</span>
+            <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+            <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="images\hills.jpg" alt="Image 2" data-index="1">
+          <figcaption>
+            Hills ma esso
+            <span class="updated-time">Updated: May 27, 2023</span>
+            <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+            <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+          </figcaption>
+        </figure>
+        <figure>
+          <img src="images\himal.jpg" alt="Image 3" data-index="2">
+          <figcaption>
+            himal pahad terai koi chaina parai
+            <span class="updated-time">Updated: May 27, 2023</span>
+            <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+            <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+          </figcaption>
+        </figure>
+        <!-- Add more images here -->
+      </div>
+    </div><hr>
+
+    <div class="overlay">
+      <span class="close">&times;</span>
+      <img class="overlay-image" src="">
+      <div class="navigation">
+        <span class="prev">&lt;</span>
+        <span class="next">&gt;</span>
+      </div>
+    </div>
+
+    <div class="comment-section">Comments<hr>
+      <div class="comment">
+        <img class="user-avatar" src="images\basantapur.jpg" alt="User Avatar">
+        <span class="comment-text">Why is the work progress so late</span>
+        <span class="updated-time">Updated: May 27, 2023</span>
+        <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+        <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+      </div>
+      <div class="comment">
+        <img class="user-avatar" src="images\basantapur.jpg" alt="User Avatar">
+        <span class="comment-text">give the details of the materials used please</span>
+        <span class="updated-time">Updated: May 27, 2023</span>
+        <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+        <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+      </div>
+      <!-- Add more comments here -->
+    </div>
+
+    <div class="new-comment">
+      <input type="text" placeholder="Add a comment" id="new-comment-input">
+      <button id="new-comment-button">Add</button>
+    </div>
+  </div>
+
+  <script>
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+    const overlay = document.querySelector('.overlay');
+    const overlayImage = document.querySelector('.overlay-image');
+    const closeButton = document.querySelector('.close');
+    const prevButton = document.querySelector('.prev');
+    const nextButton = document.querySelector('.next');
+    const likeButtons = document.querySelectorAll('.like');
+    const dislikeButtons = document.querySelectorAll('.dislike');
+    const newCommentInput = document.getElementById('new-comment-input');
+    const newCommentButton = document.getElementById('new-comment-button');
+    const commentSection = document.querySelector('.comment-section');
+
+    let currentIndex = 0;
+
+    // Function to show overlay with the clicked image
+    function showOverlay(index) {
+      currentIndex = index;
+      overlayImage.src = thumbnails[index].src;
+      overlay.classList.add('open');
+    }
+
+    // Function to close overlay
+    function closeOverlay() {
+      overlay.classList.remove('open');
+    }
+
+    // Function to show next image in overlay
+    function showNextImage() {
+      currentIndex = (currentIndex + 1) % thumbnails.length;
+      overlayImage.src = thumbnails[currentIndex].src;
+    }
+
+    // Function to show previous image in overlay
+    function showPrevImage() {
+      currentIndex = (currentIndex - 1 + thumbnails.length) % thumbnails.length;
+      overlayImage.src = thumbnails[currentIndex].src;
+    }
+
+    // Function to handle like button click
+    function handleLike() {
+      const comment = this.parentNode;
+      const likeButton = comment.querySelector('.like');
+      const dislikeButton = comment.querySelector('.dislike');
+      likeButton.style.color = 'blue';
+      dislikeButton.style.color = 'gray';
+    }
+
+    // Function to handle dislike button click
+    function handleDislike() {
+      const comment = this.parentNode;
+      const likeButton = comment.querySelector('.like');
+      const dislikeButton = comment.querySelector('.dislike');
+      dislikeButton.style.color = 'blue';
+      likeButton.style.color = 'gray';
+    }
+
+    // Function to handle new comment button click
+    function handleNewComment() {
+      const commentText = newCommentInput.value;
+      if (commentText.trim() !== '') {
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.innerHTML = `
+          <img class="user-avatar" src="images\basantapur.jpg" alt="User Avatar">
+          <span class="comment-text">${commentText}</span>
+          <span class="like" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128077;</span>
+          <span class="dislike" data-tooltip-like="Thumbs Up" data-tooltip-dislike="Thumbs Down">&#128078;</span>
+          <span class="updated-time">Updated: May 27, 2023</span>
+        `;
+        commentSection.appendChild(newComment);
+        newCommentInput.value = '';
+        newComment.querySelector('.like').addEventListener('click', handleLike);
+        newComment.querySelector('.dislike').addEventListener('click', handleDislike);
+      }
+    }
+
+    // Add event listeners to thumbnails
+    thumbnails.forEach((thumbnail, index) => {
+      thumbnail.addEventListener('click', () => showOverlay(index));
+    });
+
+    // Add event listeners to close button
+    closeButton.addEventListener('click', closeOverlay);
+
+    // Add event listeners to previous and next buttons
+    prevButton.addEventListener('click', showPrevImage);
+    nextButton.addEventListener('click', showNextImage);
+
+    // Add event listeners to like and dislike buttons
+    likeButtons.forEach((likeButton) => {
+      likeButton.addEventListener('click', handleLike);
+    });
+    dislikeButtons.forEach((dislikeButton) => {
+      dislikeButton.addEventListener('click', handleDislike);
+    });
+
+    // Add event listener to new comment button
+    newCommentButton.addEventListener('click', handleNewComment);
+  </script>
+</body>
+</html>
